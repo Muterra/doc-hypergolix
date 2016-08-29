@@ -16,32 +16,10 @@ hypergolix.Ghid and hypergolix.HGXLink
         
         ``Ghid`` instances are hashable and may be used as keys in collections.
 
-    .. code-block:: python
-
-        >>> from hypergolix import Ghid
-        >>> ghid = Ghid(1, bytes(64))
-        >>> ghid
-        Ghid(algo=1, address=b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
-        >>> bytes(ghid)
-        b'\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
-        >>> ghid2 = Ghid.from_bytes(b'\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
-        >>> ghid2 == ghid
-        True
-        >>> str(ghid)
-        Ghid('AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=')
-        >>> ghid.as_str()
-        'AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='
-        >>> ghid3 = Ghid.from_str('AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=')
-        >>> ghid3 == ghid
-        True
-
     :param int algo: The Golix-specific integer identifier for the hash 
         algorithm. Currently, only ``1`` is supported.
-
     :param bytes address: The hash digest of the Ghid.
-
     :raises ValueError: for invalid ``algo`` s.
-
     :raises ValueError: when the length of ``address`` does not match the 
         expected length for the passed ``algo``.
     
@@ -93,94 +71,275 @@ hypergolix.Ghid and hypergolix.HGXLink
             ``Ghid`` to load.
         :return Ghid: The resultant ``Ghid`` instance.
 
-.. class:: ConcatKDFHMAC(algorithm, length, salt, otherinfo, backend)
+    .. code-block:: python
+
+        >>> from hypergolix import Ghid
+        >>> ghid = Ghid(1, bytes(64))
+        >>> ghid
+        Ghid(algo=1, address=b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+        >>> bytes(ghid)
+        b'\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+        >>> ghid2 = Ghid.from_bytes(b'\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+        >>> ghid2 == ghid
+        True
+        >>> str(ghid)
+        Ghid('AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=')
+        >>> ghid.as_str()
+        'AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='
+        >>> ghid3 = Ghid.from_str('AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=')
+        >>> ghid3 == ghid
+        True
+
+.. class:: HGXLink(ipc_port=7772, debug=False, aengel=None)
 
     .. versionadded:: 0.1
 
-    Similar to ConcatKFDHash but uses an HMAC function instead.
+    The inter-process communications link to the Hypergolix service. Uses 
+    Websockets over localhost, by default on port 7772. Runs in a dedicated 
+    event loop within a separate thread. Automatically closes cleanly when the
+    main thread exits.
 
-    .. warning::
-
-        ConcatKDFHMAC should not be used for password storage.
+    :param int ipc_port: The localhost port where the Hypergolix service is 
+        currently running.
+    :param bool debug: Run the link in debug mode.
+    :param hypergolix.utils.Aengel aengel: Watches the main thread for closure,
+        initiating clean shutdown of the link. If ``None``, creates a dedicated 
+        ``Aengel`` instance for this HGXLink. If passed an existing instance of 
+        ``Aengel``, the HGXLink will add itself to the watcher.
+        
+        .. warning::
+            Changing this value from its default is not recommended, and may 
+            result in improper shutdown, possibly including orphaned threads.
+            
+    :returns: The ``HGXLink`` instance, after connecting with the Hypergolix 
+        service.
 
     .. code-block:: python
 
-        >>> import os
-        >>> from cryptography.hazmat.primitives import hashes
-        >>> from cryptography.hazmat.primitives.kdf.concatkdf import ConcatKDFHMAC
-        >>> from cryptography.hazmat.backends import default_backend
-        >>> backend = default_backend()
-        >>> salt = os.urandom(16)
-        >>> otherinfo = b"concatkdf-example"
-        >>> ckdf = ConcatKDFHMAC(
-        ...     algorithm=hashes.SHA256(),
-        ...     length=256,
-        ...     salt=salt,
-        ...     otherinfo=otherinfo,
-        ...     backend=backend
-        ... )
-        >>> key = ckdf.derive(b"input key")
-        >>> ckdf = ConcatKDFHMAC(
-        ...     algorithm=hashes.SHA256(),
-        ...     length=256,
-        ...     salt=salt,
-        ...     otherinfo=otherinfo,
-        ...     backend=backend
-        ... )
-        >>> ckdf.verify(b"input key", key)
+        >>> import hypergolix as hgx
+        >>> hgxlink = hgx.HGXLink()
 
-    :param algorithm: An instance of
-        :class:`~cryptography.hazmat.primitives.hashes.HashAlgorithm`.
+    .. attribute:: whoami
 
-    :param int length: The desired length of the derived key in bytes. Maximum
-        is ``hashlen * (2^32 -1)``.
+        The ``Ghid`` representing the public key fingerprint of the 
+        currently-logged-in Hypergolix user. This address may be used for 
+        sharing objects.
+        
+        :return Ghid: if successful
+        :raises RuntimeError: if the Hypergolix service is unavailable.
 
-    :param bytes salt: A salt. Randomizes the KDF's output. Optional, but
-        highly recommended. Ideally as many bits of entropy as the security
-        level of the hash: often that means cryptographically random and as
-        long as the hash output. Does not have to be secret, but may cause
-        stronger security guarantees if secret; If ``None`` is explicitly
-        passed a default salt of ``algorithm.block_size`` null bytes will be
-        used.
+        .. code-block:: python
 
-    :param bytes otherinfo: Application specific context information.
-        If ``None`` is explicitly passed an empty byte string will be used.
+            >>> hgxlink.whoami
+            Ghid(algo=1, address=b'\xf8A\xd6`\x11\xedN\x14\xab\xe5"\x16\x0fs\n\x02\x08\xa1\xca\xa6\xc6$\xa7D\xf7\xb9\xa2\xbc\xc0\x8c\xf3\xe1\xefP\xa1]dE\x87\tw\xb1\xc8\x003\xac>\x89U\xdd\xcc\xb5X\x1d\xcf\x8c\x0e\x0e\x03\x7f\x1e]IQ')
 
-    :param backend: An instance of
-        :class:`~cryptography.hazmat.backends.interfaces.HMACBackend`.
+    .. attribute:: app_token
 
-    :raises cryptography.exceptions.UnsupportedAlgorithm: This is raised if the
-        provided ``backend`` does not implement
-        :class:`~cryptography.hazmat.backends.interfaces.HMACBackend`
+        The token for the current application (Python session). Only available 
+        after registering the application with the Hypergolix service through 
+        one of the ``get_new_token`` or ``set_existing_token`` methods.
+        
+        :return bytes: if the current application has a token.
+        :raises RuntimeError: if the current application has no token.
 
-    :raises TypeError: This exception is raised if ``salt`` or ``otherinfo``
-        is not ``bytes``.
+        .. code-block:: python
 
-    .. method:: derive(key_material)
+            >>> hgxlink.app_token
+            b'\xe3\xc69\x0f'
+        
+    .. note::
+        
+        The following methods each expose three equivalent APIs: 
+        
+            1.  an internal API, denoted by a leading underscore 
+                (ex: ``_get_new_token()``).
+                
+                .. warning::
+                    
+                    This method **must only** be awaited from within the 
+                    internal  ``HGXLink`` event loop, or it may break the 
+                    ``HGXLink``, and will likely fail to work.
+                    
+                **This method is a coroutine.** Example usage::
+                    
+                    token = await _get_new_token()
+                
+            2.  a threadsafe external API, denoted by the _threadsafe suffix 
+                (ex: ``get_new_token_threadsafe()``). 
+                
+                .. warning::
+                    
+                    This method **must not** be called from within the internal 
+                    ``HGXLink`` event loop, or it will deadlock.
+                
+                **This method is a standard, blocking, synchronous method.** 
+                Example usage::
+                
+                    token = get_new_token_threadsafe()
+                
+            3.  a loopsafe external API, denoted by the _loopsafe suffix 
+                (ex: ``get_new_token_loopsafe()``). 
+                
+                .. warning::
+                    
+                    This method **must not** be awaited from within the 
+                    internal ``HGXLink`` event loop, or it will deadlock.
+                    
+                **This method is a coroutine** that may be awaited from your 
+                own external event loop. Example usage::
 
-        :param bytes key_material: The input key material.
-        :return bytes: The derived key.
-        :raises TypeError: This exception is raised if ``key_material`` is not
-                           ``bytes``.
+                    token = await get_new_token_loopsafe()
+                    
+    .. method:: _new(cls, state, api_id=None, dynamic=True, private=False)
+                new_threadsafe(cls, state, api_id=None, dynamic=True, private=False)
+                new_loopsafe(cls, state, api_id=None, dynamic=True, private=False)
+                
+        Makes a new Hypergolix object.
 
-        Derives a new key from the input key material.
+        :param type cls: the ``hypergolix.ObjBase`` class or subclass to use 
+            for this object.
+        :param state: the state to initialize the object with. It will be 
+            immediately pushed upstream to Hypergolix during creation of the
+            object.
+        :param bytes api_id: the API id to use for this object. If ``None``, 
+            defaults to the ``_hgx_DEFAULT_API_ID`` declared for the passed 
+            ``cls`` .
+        :param bool dynamic: determines whether the created object will be 
+            dynamic (and therefore mutable), or static (and wholly immutable).
+        :param bool private: determines whether the created object will be 
+            restricted to **this specific application,** for this specific 
+            Hypergolix user. By default, objects created by any Hypergolix 
+            application are available to all other Hypergolix apps for the 
+            current Hypergolix user.
+        :returns: the created object.
+        :raises hypergolix.exceptions.IPCError: upon IPC failure, or improper
+            object declaration.
+        :raises Exception: for serialization failures. The specific exception 
+            type is determined by the serialization process itself.
 
-    .. method:: verify(key_material, expected_key)
+        .. code-block:: python
+     
+            >>> obj = hgxlink.new_threadsafe(
+            ...     cls = hgx.ObjBase,
+            ...     state = b'Hello world!'
+            ... )
+            >>> obj
+            <ObjBase with state b'Hello world!' at Ghid('Abf3dRNZAPhrqY93q4Q-wG0QvPnP_anV8XfauVMlFOvAgeC5JVWeXTUftJ6tmYveH0stGaAJ0jN9xKriTT1F6Mk=')>
+            
+                    
+    .. method:: _get(cls, ghid)
+                get_threadsafe(cls, ghid)
+                get_loopsafe(cls, ghid)
+                
+        Retrieves an existing Hypergolix object.
 
-        :param bytes key_material: The input key material. This is the same as
-                                   ``key_material`` in :meth:`derive`.
-        :param bytes expected_key: The expected result of deriving a new key,
-                                   this is the same as the return value of
-                                   :meth:`derive`.
-        :raises cryptography.exceptions.InvalidKey: This is raised when the
-                                                    derived key does not match
-                                                    the expected key.
-        :raises cryptography.exceptions.AlreadyFinalized: This is raised when
-                                                          :meth:`derive` or
-                                                          :meth:`verify` is
-                                                          called more than
-                                                          once.
+        :param type cls: the ``hypergolix.ObjBase`` class or subclass to use 
+            for this object.
+        :param Ghid ghid: the ``Ghid`` address of the object to retrieve.
+        :returns: the retrieved object.
+        :raises hypergolix.exceptions.IPCError: upon IPC failure, or improper
+            object declaration.
+        :raises Exception: for serialization failures. The specific exception 
+            type is determined by the serialization process itself.
 
-        This checks whether deriving a new key from the supplied
-        ``key_material`` generates the same key as the ``expected_key``, and
-        raises an exception if they do not match.
+        .. code-block:: python
+     
+            >>> address = hgx.Ghid.from_str('Abf3dRNZAPhrqY93q4Q-wG0QvPnP_anV8XfauVMlFOvAgeC5JVWeXTUftJ6tmYveH0stGaAJ0jN9xKriTT1F6Mk=')
+            >>> obj = hgxlink.get_threadsafe(
+            ...     cls = hgx.ObjBase,
+            ...     ghid = address
+            ... )
+            >>> obj
+            <ObjBase with state b'Hello world!' at Ghid('Abf3dRNZAPhrqY93q4Q-wG0QvPnP_anV8XfauVMlFOvAgeC5JVWeXTUftJ6tmYveH0stGaAJ0jN9xKriTT1F6Mk=')>
+
+    .. method:: _get_new_token()
+                get_new_token_threadsafe()
+                get_new_token_loopsafe()
+    
+        Requests a new application token from the Hypergolix service. App 
+        tokens are required for some advanced features of Hypergolix. This 
+        token should be reused whenever (and wherever) that exact application 
+        is restarted. It is unique for every application, and every Hypergolix 
+        user.
+
+        :return bytes: the app token.
+        :raises hypergolix.exceptions.IPCError: if unsuccessful.
+
+        .. code-block:: python
+
+            >>> hgxlink.get_new_token_threadsafe()
+            b'\xe3\xc69\x0f'
+
+    .. method:: _set_existing_token(app_token)
+                set_existing_token_threadsafe(app_token)
+                set_existing_token_loopsafe(app_token)
+    
+        Re-registers an existing application with the Hypergolix service. If 
+        previous instances of the app token have declared a startup object with 
+        the Hypergolix service, returns it.
+
+        :param bytes app_token: the application's pre-registered Hypergolix 
+            token.
+        :return None: if no startup object has been declared.
+        :return hypergolix.ObjBase: if a startup object has been declared. This 
+            object may then be recast into any other Hypergolix object.
+        :raises hypergolix.exceptions.IPCError: if unsuccessful.
+
+        .. code-block:: python
+
+            >>> hgxlink.set_existing_token_threadsafe(b'\xe3\xc69\x0f')
+
+    .. method:: _register_share_handler(api_id, cls, handler)
+                register_share_handler_threadsafe(api_id, cls, handler)
+                register_share_handler_loopsafe(api_id, cls, handler, target_loop)
+    
+        Registers a handler for incoming, unsolicited object shares from other 
+        Hypergolix users. Without registering a share handler, Hypergolix 
+        applications cannot receive shared objects from other users.
+
+        :param bytes api_id: determines what objects will be sent to the 
+            application. Any objects shared with the current Hypergolix user 
+            with a matching api_id will be sent to the application. Must have a 
+            length of 64 bytes.
+        :param type cls: the ``hypergolix.ObjBase`` class or subclass to use 
+            for these objects. This determines what ``type`` of object will be 
+            delivered to the ``handler``.
+        :param handler: the share handler. For threadsafe callbacks, this must 
+            be a callable; for async callbacks, it must be an awaitable. Upon 
+            receipt of a share, the handler will be passed the object as a 
+            single argument.
+        :param target_loop: for loopsafe callbacks, the event loop to run the 
+            callback in.
+
+        .. code-block:: python
+
+            >>> def handler(obj):
+            ...     print(repr(obj))
+            ... 
+            >>> hgxlink.register_share_handler_threadsafe(
+            ...     api_id = hgx.ObjBase._hgx_DEFAULT_API_ID,
+            ...     cls = hgx.ObjBase,
+            ...     handler = handler
+            ... )
+            
+        Resulting call:
+
+        .. code-block:: python
+
+            >>> 
+            <ObjBase with state b'Hello world!' at Ghid('Abf3dRNZAPhrqY93q4Q-wG0QvPnP_anV8XfauVMlFOvAgeC5JVWeXTUftJ6tmYveH0stGaAJ0jN9xKriTT1F6Mk=')>
+            
+        .. note::
+            
+            The :meth:`_register_share_handler()` callback will be awaited from 
+            within the internal ``HGXLink`` event loop.
+            
+        .. note::
+            
+            The :meth:`register_share_handler_threadsafe()` callback will be 
+            called from a dedicated, single-use, disposable thread.
+            
+        .. note::
+            
+            The :meth:`register_share_handler_loopsafe()` callback will be 
+            called from within the passed ``target_loop``.
