@@ -1,3 +1,0 @@
-Hypergolix objects and proxies
-======================================
-

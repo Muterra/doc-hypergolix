@@ -1,8 +1,0 @@
-Running Hypergolix
-===================
-
-Starting Hypergolix for the first time
--------------------
-
-Subsequent usage
------------------
