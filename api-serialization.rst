@@ -1,5 +1,14 @@
-Hypergolix serialization
+PickleObj, PickleProxy; JsonObj, JsonProxy; custom serialization
 ===============================================================================
+
+.. note::
+
+    This assumes familiarity with ObjBase and ProxyBase.
+
++ from .objproxy import PickleObj
++ from .objproxy import PickleProxy
++ from .objproxy import JsonObj
++ from .objproxy import JsonProxy
 
 JSON serialization
 -------------------------------------------------------------------------------
