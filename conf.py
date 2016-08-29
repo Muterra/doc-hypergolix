@@ -51,7 +51,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'Hypergolix'
+project = 'Hypergolix Python Integration'
 copyright = '2016, Muterra, Inc'
 author = 'Muterra, Inc'
 
@@ -60,7 +60,7 @@ author = 'Muterra, Inc'
 # built documents.
 #
 # The short X.Y version.
-version = '0.1.0'
+version = '0.1'
 # The full version, including alpha/beta/rc tags.
 release = '0.1.0'
 
@@ -265,8 +265,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'Hypergolix.tex', 'Hypergolix Documentation',
-     'Muterra, Inc', 'manual'),
+    (master_doc, 'Hypergolix.tex', 
+     'Hypergolix Python integration documentation', 'Muterra, Inc', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -307,7 +307,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'hypergolix', 'Hypergolix Documentation',
+    (master_doc, 'hypergolix', 'Hypergolix Python integration documentation',
      [author], 1)
 ]
 
@@ -322,7 +322,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'Hypergolix', 'Hypergolix Documentation',
+    (master_doc, 'Hypergolix', 'Hypergolix Python integration documentation',
      author, 'Hypergolix', 'One line description of project.',
      'Miscellaneous'),
 ]

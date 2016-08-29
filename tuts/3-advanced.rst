@@ -1,0 +1,16 @@
+Hypergolix app registration and advanced objects
+==============
+
+App tokens
+--------
+
+Startup objects
+---------
+
+Private objects
+----------
+
+Note on inter-agent privacy vs intra-agent privacy
+
+Custom serialization
+-----------

@@ -1,0 +1,22 @@
+Sharing Hypergolix objects
+==========================
+
+Your fingerprint
+~~~~~~~~~~~~~~
+
+Note accessible through whoami!
+
+Inter-agent privacy vs intra-agent privacy
+~~~~~~~~~~~~
+
+Sharing an object
+------------
+
+Registering a share handler
+------------
+
+Working with shared objects
+------------
+
+Adding update handlers
+~~~~~~~~~~~~~~
