@@ -123,7 +123,7 @@ hypergolix.Ghid and hypergolix.HGXLink
 
         The ``Ghid`` representing the public key fingerprint of the 
         currently-logged-in Hypergolix user. This address may be used for 
-        sharing objects.
+        sharing objects. This attribute is read-only.
         
         :return Ghid: if successful
         :raises RuntimeError: if the Hypergolix service is unavailable.
@@ -137,7 +137,8 @@ hypergolix.Ghid and hypergolix.HGXLink
 
         The token for the current application (Python session). Only available 
         after registering the application with the Hypergolix service through 
-        one of the ``get_new_token`` or ``set_existing_token`` methods.
+        one of the ``get_new_token`` or ``set_existing_token`` methods. This 
+        attribute is read-only.
         
         :return bytes: if the current application has a token.
         :raises RuntimeError: if the current application has no token.
@@ -310,6 +311,27 @@ hypergolix.Ghid and hypergolix.HGXLink
             single argument.
         :param target_loop: for loopsafe callbacks, the event loop to run the 
             callback in.
+            
+        .. warning::
+        
+            Any given API ID can have at most a single share handler. 
+            Subsequent calls to any of the :meth:`_register_share_handler()` 
+            methods will overwrite the existing share handler without warning.
+            
+        .. note::
+            
+            The :meth:`_register_share_handler()` callback will be awaited from 
+            within the internal ``HGXLink`` event loop.
+            
+        .. note::
+            
+            The :meth:`register_share_handler_threadsafe()` callback will be 
+            called from a dedicated, single-use, disposable thread.
+            
+        .. note::
+            
+            The :meth:`register_share_handler_loopsafe()` callback will be 
+            called from within the passed ``target_loop``.
 
         .. code-block:: python
 
@@ -328,18 +350,3 @@ hypergolix.Ghid and hypergolix.HGXLink
 
             >>> 
             <ObjBase with state b'Hello world!' at Ghid('Abf3dRNZAPhrqY93q4Q-wG0QvPnP_anV8XfauVMlFOvAgeC5JVWeXTUftJ6tmYveH0stGaAJ0jN9xKriTT1F6Mk=')>
-            
-        .. note::
-            
-            The :meth:`_register_share_handler()` callback will be awaited from 
-            within the internal ``HGXLink`` event loop.
-            
-        .. note::
-            
-            The :meth:`register_share_handler_threadsafe()` callback will be 
-            called from a dedicated, single-use, disposable thread.
-            
-        .. note::
-            
-            The :meth:`register_share_handler_loopsafe()` callback will be 
-            called from within the passed ``target_loop``.
