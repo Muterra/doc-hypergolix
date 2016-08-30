@@ -69,7 +69,7 @@ public key fingerprint.
     ... )
     >>> obj.hgx_ghid.as_str()
     'AWFUmWQJvo3U81-hH3WgtXa9bhB9dyXf1QT0yB_l3b6XwjB-WqeN-Lz7JzkMckhDRcjCFS1EmxrcQ1OE2f0Jxh4='
-    >>> bob = Ghid.from_str('AfhB1mAR7U4Uq-UiFg9zCgIIocqmxiSnRPe5orzAjPPh71ChXWRFhwl3scgAM6w-iVXdzLVYHc-MDg4Dfx5dSVE=')
+    >>> bob = hgx.Ghid.from_str('AfhB1mAR7U4Uq-UiFg9zCgIIocqmxiSnRPe5orzAjPPh71ChXWRFhwl3scgAM6w-iVXdzLVYHc-MDg4Dfx5dSVE=')
     >>> obj.hgx_share_threadsafe(bob)
     
 **As Bob:**
@@ -128,8 +128,10 @@ API reference
 .. toctree::
     :maxdepth: 2
     
+    api-ghid
     api-hgxlink
-    api-objproxy
+    api-obj
+    api-proxy
     api-serialization
 
 Indices and tables

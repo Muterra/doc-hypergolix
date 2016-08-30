@@ -1,20 +1,15 @@
-PickleObj, PickleProxy; JsonObj, JsonProxy; custom serialization
+Non-trivial object serialization
 ===============================================================================
 
 .. note::
 
-    This assumes familiarity with :class:`HGXLink`, :class:`Ghid`, :class:`ObjBase`, and 
-    :class:`ProxyBase` objects.
+    This assumes familiarity with :class:`HGXLink`, :class:`Ghid`, 
+    :class:`ObjBase`, and :class:`ProxyBase` objects.
 
-+ from .objproxy import PickleObj
-+ from .objproxy import PickleProxy
-+ from .objproxy import JsonObj
-+ from .objproxy import JsonProxy
-
-JSON serialization
+JSON serialization: :class:`JsonObj` and :class:`JsonProxy`
 -------------------------------------------------------------------------------
 
-Pickle serialization
+Pickle serialization: :class:`PickleObj` and :class:`PickleProxy`
 -------------------------------------------------------------------------------
 
 .. danger::
