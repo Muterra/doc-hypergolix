@@ -134,10 +134,12 @@ API reference
     api-proxy
     api-serialization
 
-Indices and tables
--------------------------------------------------------------------------------
+..
+    Comment all of this stuff out until it's deemed useful
+    
+    Indices and tables
+    -------------------------------------------------------------------------------
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
+    * :ref:`genindex`
+    * :ref:`modindex`
+    * :ref:`search`

@@ -1,4 +1,4 @@
-hypergolix.ObjBase
+hypergolix.\ :class:`ObjBase`
 ===============================================================================
 
 .. note::
@@ -71,7 +71,7 @@ hypergolix.ObjBase
         automatic updates, and forced to poll through their :meth:`hgx_sync()` 
         methods. Furthermore, their :attr:`hgx_binder` and :attr:`hgx_ghid` 
         properties will be unavailable until after the first call to 
-        :meth:`hgx_push()`.
+        :meth:`_hgx_push()`.
         
     .. note::
         
@@ -84,17 +84,26 @@ hypergolix.ObjBase
        
             bytes(63) + b'\x01'
 
+    .. code-block:: python
+ 
+        >>> obj = hgxlink.new_threadsafe(
+        ...     cls = hgx.ObjBase,
+        ...     state = b'Hello world!'
+        ... )
+        >>> obj
+        <ObjBase with state b'Hello world!' at Ghid('Abf3dRNZAPhrqY93q4Q-wG0QvPnP_anV8XfauVMlFOvAgeC5JVWeXTUftJ6tmYveH0stGaAJ0jN9xKriTT1F6Mk=')>
+
     .. attribute:: hgx_state
 
         The read-write value of the object itself. This will be serialized and 
-        uploaded through Hypergolix upon any call to :meth:`hgx_push()`.
+        uploaded through Hypergolix upon any call to :meth:`_hgx_push()`.
         
         .. warning::
             
             Updating ``hgx_state`` will **not** update Hypergolix. To upload 
-            the change, you must explicitly call :meth:`hgx_push()`.
+            the change, you must explicitly call :meth:`_hgx_push()`.
         
-        :return bytes: read-only state.
+        :rtype: bytes
 
         .. code-block:: python
 
@@ -184,14 +193,17 @@ hypergolix.ObjBase
         instance of one of its subclasses). The result will be ``True`` if (and
         only if) all of the following conditions are satisfied:
         
-        1. They both have an .hgx_ghid attribute (else, ``raise TypeError``)
-        2. The .hgx_ghid attribute compares equally
-        3. They both have an .hgx_state attribute (else, ``raise TypeError``)
-        4. The .hgx_state attribute compares equally
-        5. They both have an .hgx_binder attribute (else, ``raise TypeError``)
-        6. The .hgx_binder attribute compares equally
+        1.  They both have an :attr:`hgx_ghid` attribute (else, 
+            ``raise TypeError``)
+        2.  The :attr:`hgx_ghid` attribute compares equally
+        3.  They both have an :attr:`hgx_state` attribute (else, 
+            ``raise TypeError``)
+        4.  The :attr:`hgx_state` attribute compares equally
+        5.  They both have an :attr:`hgx_binder` attribute (else, 
+            ``raise TypeError``)
+        6.  The :attr:`hgx_binder` attribute compares equally
 
-        :param Ghid other: The ``ObjBase`` (or subclass) instance to compare 
+        :param other: The ``ObjBase`` (or subclass) instance to compare 
             with.
         :return bool: The comparison result.
         :raises TypeError: when attempting to compare with a 

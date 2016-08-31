@@ -1,4 +1,4 @@
-hypergolix.HGXLink
+hypergolix.\ :class:`HGXLink`
 ===============================================================================
 
 .. class:: HGXLink(ipc_port=7772, debug=False, aengel=None)

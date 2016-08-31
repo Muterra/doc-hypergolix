@@ -21,3 +21,13 @@ Pickle serialization: :class:`PickleObj` and :class:`PickleProxy`
 
 Custom serialization
 -------------------------------------------------------------------------------
+
+
+Creating proxy classes for new serializations is trivial; simply subclass the 
+serialization class and :class:`ProxyBase`. For example, the :class:`JsonProxy` 
+class definition, in its entirety, is::
+        
+    class JsonProxy(JsonObj, ProxyBase):
+        ''' Make a proxy object that serializes with json.
+        '''
+        pass
