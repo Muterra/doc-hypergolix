@@ -58,8 +58,8 @@ hypergolix.\ :class:`Ghid`
     .. method:: __str__()
     
         Returns a string representation of the ``Ghid`` *object*, 
-        including its class, using a url-safe base64-encoded version of its
-        bytes serialization.
+        including its class, using a truncated url-safe base64-encoded version
+        of its bytes serialization.
 
         :rtype: str 
 
@@ -68,7 +68,7 @@ hypergolix.\ :class:`Ghid`
             >>> ghid
             Ghid(algo=1, address=b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
             >>> str(ghid)
-            Ghid('AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=')
+            Ghid('AQAAA...')
 
     .. method:: __bytes__()
     
@@ -121,6 +121,29 @@ hypergolix.\ :class:`Ghid`
     
         :param str b64: The serialization to load
         :rtype: Ghid
+
+        .. code-block:: python
+
+            >>> ghid
+            Ghid(algo=1, address=b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+            >>> ghid.as_str()
+            'AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='
+            >>> ghid3 = Ghid.from_str('AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=')
+            >>> ghid3 == ghid
+            True
+            
+    .. classmethod:: pseudorandom(algo)
+    
+        Creates a pseudorandom ``Ghid`` for the passed ``int`` algorithm
+        identifier.
+    
+        :param str b64: The serialization to load
+        :rtype: Ghid
+        
+        .. warning::
+        
+            This is not suitable for cryptographic purposes. It is primarily
+            useful during testing.
 
         .. code-block:: python
 
