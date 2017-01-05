@@ -1,3 +1,4 @@
+===============================================================================
 Hypergolix
 ===============================================================================
 
@@ -49,108 +50,104 @@ and Hypergolix takes care of the rest. Alice can modify her object locally, and
 so long as she and Bob share a common network link (internet, LAN...), Bob will
 automatically receive an update from upstream.
 
+Hypergolix is marketed towards Internet of Things development, but it's
+perfectly suitable for other applications as well. For example, the first
+not-completely-toy `Hypergolix demo app
+<https://github.com/Muterra/py_hypergolix_demos/tree/master/telemeter>`_ is a
+remote monitoring app for home servers.
+
+-------------------------------------------------------------------------------
 Features
 -------------------------------------------------------------------------------
 
-Hypergolix is marketed towards home automation and Internet of Things
-development.
-
-Outside of local RAM, objects created with Hypergolix are always encrypted. All 
-of your Hypergolix account is inflated from a user ID (the hash digest of your
-bootstrap object) and your Hypergolix password.
-
-Persistent objects
+Network-agnostic
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Log in to Hypergolix, and create an object in any Python session:
+Both Hypergolix objects and users are hash-addressed. Hypergolix applications
+don't need to worry about the network topology between endpoints; Hypergolix is
+offline-first and can failover to local storage and/or LAN servers when
+internet connectivity is disrupted. This happens completely transparently to
+both the application and the end user.
+
+Client-side encryption and authentication
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+All non-local operations are enforced by cryptograpy. Specifically, Hypergolix
+is backed by the `Golix protocol <https://github.com/Muterra/doc-golix>`_,
+with the current implementation supporting SHA-512, AES-256, RSA-4096, and
+X25519, with RSA deprecation planned by early 2018.
+
+Except in local memory, Hypergolix objects are always encrypted (including
+on-disk). Authentication is verified redundantly (by both client and server),
+as is integrity. Both checks can be performed offline.
+
+Accounts are self-hosting: all user data is extracted from a special Hypergolix
+bootstrap object encrypted with the user's ``scrypted`` password.
+
+Explicit data expiration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Hypergolix data is explicitly removed, and removal propagates to upstream
+servers automatically. Hypergolix lifetimes are directly analogous to object
+persistence in a reference-counting memory-managed programming language: each
+object (Hypergolix container) is referenced by a name (a Hypergolix address),
+and when all its referents pass out of scope (are explicitly dereferenced), the
+object itself is garbage collected.
+
+Open source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Hypergolix is completely open-source. Running your own local server is easy:
+``python3 -m hypergolix.service start``. Here are some source code links:
+
++   `Hypergolix source <https://github.com/Muterra/py_hypergolix>`_
+    (~36k LoC)
++   `Hypergolix event loop management <https://github.com/Muterra/py_loopa>`_
+    (~4k LoC)
++   `Hypergolix daemonization <https://github.com/Muterra/py_daemoniker>`_
+    (~7k LoC)
++   `Golix implementation <https://github.com/Muterra/py_golix>`_
+    (~5k LoC)
+
+Simple to integrate
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Hypergolix supports all major desktop platforms (OSX, Windows, Linux; mobile
+support is planned in the future). Applications interact with Hypergolix
+through inter-process communication, using Websockets over ``localhost``.
+Hypergolix ships with Python bindings to the API (broader language support is a
+very high priority) for easy integration:
 
 .. code-block:: python
 
+    >>> # This connects to Hypergolix
     >>> import hypergolix as hgx
     >>> hgxlink = hgx.HGXLink()
+    
+    >>> # This creates a new object
     >>> obj = hgxlink.new_threadsafe(
     ...     cls = hgx.JsonProxy,
-    ...     state = 'Hello world!',
+    ...     state = 'Hello World!',
     ... )
-    >>> obj
-    <JsonProxy to 'Hello world!' at Ghid('AdGI5by1-Ppf0ymF26R37waIZnYADnPht5rZqLSDAmD0kV1ax94Yan_9mdd93-8i89QjDeIjBZOQhZxeG5O3HO8=')>
     
-Later, logged in to the same Hypergolix account, from any other Python session, 
-and even on a different computer:
-
-.. code-block:: python
-
-    >>> import hypergolix as hgx
-    >>> hgxlink = hgx.HGXLink()
-    >>> obj_address = hgx.Ghid.from_str('AdGI5by1-Ppf0ymF26R37waIZnYADnPht5rZqLSDAmD0kV1ax94Yan_9mdd93-8i89QjDeIjBZOQhZxeG5O3HO8=')
-    >>> obj = hgxlink.get_threadsafe(
-    ...     cls = hgx.JsonProxy,
-    ...     ghid = obj_address,
-    ... )
-    >>> obj
-    <JsonProxy to 'Hello world!' at Ghid('AdGI5by1-Ppf0ymF26R37waIZnYADnPht5rZqLSDAmD0kV1ax94Yan_9mdd93-8i89QjDeIjBZOQhZxeG5O3HO8=')>
-    
-Using proxies allows applications to manipulate these objects like any other:
-
-.. code-block:: python
-
+    >>> # This updates the object
     >>> obj += ' Welcome to Hypergolix.'
     >>> obj.hgx_push_threadsafe()
     >>> obj
-    <JsonProxy to 'Hello world! Welcome to Hypergolix.' at Ghid('AdGI5by1-Ppf0ymF26R37waIZnYADnPht5rZqLSDAmD0kV1ax94Yan_9mdd93-8i89QjDeIjBZOQhZxeG5O3HO8=')>
-
-Sharing objects
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Hypergolix objects can be shared with any other Hypergolix user, through their
-public key fingerprint.
-
-**As Alice:**
-
-.. code-block:: python
-
-    >>> import hypergolix as hgx
-    >>> hgxlink = hgx.HGXLink()
-    >>> obj = hgxlink.new_threadsafe(
-    ...     cls = hgx.JsonProxy,
-    ...     state = 'Hello Bob!',
-    ... )
+    <JsonProxy to 'Hello World! Welcome to Hypergolix!' at Ghid('WFUmW...')>
+    
+    >>> # This is the object's address, which we need to retrieve it
     >>> obj.hgx_ghid.as_str()
     'AWFUmWQJvo3U81-hH3WgtXa9bhB9dyXf1QT0yB_l3b6XwjB-WqeN-Lz7JzkMckhDRcjCFS1EmxrcQ1OE2f0Jxh4='
-    >>> bob = hgx.Ghid.from_str('AfhB1mAR7U4Uq-UiFg9zCgIIocqmxiSnRPe5orzAjPPh71ChXWRFhwl3scgAM6w-iVXdzLVYHc-MDg4Dfx5dSVE=')
-    >>> obj.hgx_share_threadsafe(bob)
     
-**As Bob:**
-
-.. code-block:: python
-
-    >>> import hypergolix as hgx
-    >>> hgxlink = hgx.HGXLink()
-    >>> obj_address = hgx.Ghid.from_str('AWFUmWQJvo3U81-hH3WgtXa9bhB9dyXf1QT0yB_l3b6XwjB-WqeN-Lz7JzkMckhDRcjCFS1EmxrcQ1OE2f0Jxh4=')
-    >>> obj = hgxlink.get_threadsafe(
-    ...     cls = hgx.JsonProxy,
-    ...     ghid = obj_address,
-    ... )
+    >>> # This retrieves the object later
+    >>> address = hgx.Ghid.from_str(
+    ...     'AWFUmWQJvo3U81-hH3WgtXa9bhB9dyXf1QT0yB_l3b6XwjB-WqeN-Lz7JzkMckhDRcjCFS1EmxrcQ1OE2f0Jxh4=')
+    >>> obj = hgxlink.get_threadsafe(cls=hgx.JsonProxy, ghid=address)
     >>> obj
-    <JsonProxy to 'Hello Bob!' at Ghid('AWFUmWQJvo3U81-hH3WgtXa9bhB9dyXf1QT0yB_l3b6XwjB-WqeN-Lz7JzkMckhDRcjCFS1EmxrcQ1OE2f0Jxh4=')>
-    
-For Bob, this object is read-only, but Alice may update the object at any time, 
-and the updates will propagate to Bob's application automatically:
+    <JsonProxy to 'Hello World! Welcome to Hypergolix!' at Ghid('WFUmW...')>
 
-**As Alice:**
-
-.. code-block:: python
-
-    >>> obj += ' Welcome to Hypergolix!'
-    >>> obj.hgx_push_threadsafe()
-    
-**As Bob:**
-
-.. code-block:: python
-
-    >>> obj
-    <JsonProxy to 'Hello Bob! Welcome to Hypergolix!' at Ghid('AWFUmWQJvo3U81-hH3WgtXa9bhB9dyXf1QT0yB_l3b6XwjB-WqeN-Lz7JzkMckhDRcjCFS1EmxrcQ1OE2f0Jxh4=')>
-
+-------------------------------------------------------------------------------
 Installing and starting Hypergolix
 -------------------------------------------------------------------------------
 
@@ -160,6 +157,7 @@ Installing and starting Hypergolix
     setup-1-installing
     setup-2-running
 
+-------------------------------------------------------------------------------
 Tutorials
 -------------------------------------------------------------------------------
 
@@ -170,6 +168,7 @@ Tutorials
     tuts-2-sharing
     tuts-3-advanced
 
+-------------------------------------------------------------------------------
 API reference
 -------------------------------------------------------------------------------
 
