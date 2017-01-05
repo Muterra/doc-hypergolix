@@ -1,11 +1,59 @@
-Integrating Python applications with Hypergolix
+Hypergolix
 ===============================================================================
 
-What is Hypergolix?
+Hypergolix is "programmable Dropbox". Think of it like this:
+
+.. raw:: html
+
+    <div class="clearfix"></div>
+    <div style="width:50%; display: inline-block; min-width: 285px;">
+    <div class="sidebar admonition" style="width: 100%;">
+    <p class="sidebar-title">Dropbox</p>
+
+1.  **run** local applications
+2.  on different computers
+3.  using **files and folders**
+4.  synced across the internet
+
+.. raw:: html
+
+    </div></div><div style="width:50%; display: inline-block; min-width: 285px;">
+    <div class="sidebar admonition" style="width: 100%;">
+    <p class="sidebar-title">Hypergolix</p>
+
+1.  **write** local applications
+2.  on different computers
+3.  using **programming objects**
+4.  synced across the internet
+
+.. raw:: html
+
+    </div></div>
+    <div class="clearfix"></div>
+
+Hypergolix runs as a local background service, just like Dropbox does. Once
+it's running, instead of spending time worrying about relative IP addresses,
+NAT traversal, pub/sub brokers, or mutual authentication, your code can just
+do this:
+
+.. code-block:: python
+
+    >>> import hypergolix as hgx
+    >>> hgxlink = hgx.HGXLink()
+    >>> alice = hgxlink.whoami
+    >>> bob = hgx.Ghid.from_str('AR_2cdgIjlHpaqGa7K8CmvSksaKMIi_scApddFgHT8dZy_vW3YgoUV5T4iVvlzE2V8qsje19K33KZhyI2i0FwAk=')
+    >>> obj = hgxlink.new_threadsafe(cls=hgx.JsonProxy, state='Hello world!')
+    >>> obj.share_threadsafe(bob)
+
+and Hypergolix takes care of the rest. Alice can modify her object locally, and
+so long as she and Bob share a common network link (internet, LAN...), Bob will
+automatically receive an update from upstream.
+
+Features
 -------------------------------------------------------------------------------
 
-Succinctly: Hypergolix is Dropbox, but for programming objects. It emphasizes 
-sharability, is geared towards IoT, and heavily protects privacy/security.
+Hypergolix is marketed towards home automation and Internet of Things
+development.
 
 Outside of local RAM, objects created with Hypergolix are always encrypted. All 
 of your Hypergolix account is inflated from a user ID (the hash digest of your
