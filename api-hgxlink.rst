@@ -1,4 +1,5 @@
-hypergolix.\ :class:`HGXLink`
+===============================================================================
+Hypergolix IPC: the :class:`HGXLink`
 ===============================================================================
 
 .. class:: HGXLink(ipc_port=7772, autostart=True, *args, threaded=True, **kwargs)
@@ -185,7 +186,7 @@ hypergolix.\ :class:`HGXLink`
         Makes a new Hypergolix object.
 
         :param type cls: the Hypergolix object class to use for this object.
-            See :doc:`api-obj`.
+            See :doc:`api-objproxy`.
         :param state: the state to initialize the object with. It will be 
             immediately pushed upstream to Hypergolix during creation of the
             object.
@@ -223,7 +224,7 @@ hypergolix.\ :class:`HGXLink`
         Retrieves an existing Hypergolix object.
 
         :param type cls: the Hypergolix object class to use for this object.
-            See :doc:`api-obj`.
+            See :doc:`api-objproxy`.
         :param Ghid ghid: the ``Ghid`` address of the object to retrieve.
         :returns: the retrieved object.
         :raises hypergolix.exceptions.IPCError: upon IPC failure, or improper

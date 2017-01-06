@@ -158,6 +158,18 @@ Installing and starting Hypergolix
     setup-2-running
 
 -------------------------------------------------------------------------------
+API reference
+-------------------------------------------------------------------------------
+
+.. toctree::
+    :maxdepth: 2
+    
+    api-ghid
+    api-hgxlink
+    api-objproxy
+    api-serialization
+
+-------------------------------------------------------------------------------
 Tutorials
 -------------------------------------------------------------------------------
 
@@ -167,19 +179,6 @@ Tutorials
     tuts-1-basics
     tuts-2-sharing
     tuts-3-advanced
-
--------------------------------------------------------------------------------
-API reference
--------------------------------------------------------------------------------
-
-.. toctree::
-    :maxdepth: 2
-    
-    api-ghid
-    api-hgxlink
-    api-obj
-    api-proxy
-    api-serialization
 
 ..
     Comment all of this stuff out until it's deemed useful

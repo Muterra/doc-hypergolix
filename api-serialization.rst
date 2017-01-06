@@ -1,4 +1,5 @@
-Non-trivial object serialization
+===============================================================================
+Serialized Python objects
 ===============================================================================
 
 .. note::
@@ -6,6 +7,7 @@ Non-trivial object serialization
     This assumes familiarity with :class:`HGXLink`, :class:`Ghid`, 
     :class:`ObjBase`, and :class:`ProxyBase` objects.
 
+-------------------------------------------------------------------------------
 JSON serialization: :class:`JsonObj` and :class:`JsonProxy`
 -------------------------------------------------------------------------------
 
@@ -80,6 +82,7 @@ support a wider range of ``hgx_state`` value types.
         >>> obj
         <JsonProxy to {'seven': 7} at Ghid('Abf3dRNZAPhrqY93q4Q-wG0QvPnP_anV8XfauVMlFOvAgeC5JVWeXTUftJ6tmYveH0stGaAJ0jN9xKriTT1F6Mk=')>
 
+-------------------------------------------------------------------------------
 Pickle serialization: :class:`PickleObj` and :class:`PickleProxy`
 -------------------------------------------------------------------------------
 
@@ -170,6 +173,7 @@ to support a wider range of ``hgx_state`` value types.
         >>> obj
         <PickleProxy to {'seven': 7} at Ghid('Abf3dRNZAPhrqY93q4Q-wG0QvPnP_anV8XfauVMlFOvAgeC5JVWeXTUftJ6tmYveH0stGaAJ0jN9xKriTT1F6Mk=')>
 
+-------------------------------------------------------------------------------
 Custom serialization
 -------------------------------------------------------------------------------
 
@@ -180,7 +184,9 @@ subclassing :class:`ObjBase` and overriding:
 2.  ``staticmethod`` or ``classmethod`` **coroutine** ``ObjBase._hgx_pack()``
 3.  ``staticmethod`` or ``classmethod`` **coroutine** ``ObjBase._hgx_unpack()``
 
-A (non-functional) toy example follows::
+A (non-functional) toy example follows:
+
+.. code-block:: python
 
     class ToyObj(ObjBase):
         ''' An ObjBase that customizes serialization.
