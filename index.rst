@@ -57,6 +57,37 @@ not-completely-toy `Hypergolix demo app
 remote monitoring app for home servers.
 
 -------------------------------------------------------------------------------
+Quickstart
+-------------------------------------------------------------------------------
+
+This install, configure, and start Hypergolix. You must have already satisfied
+all install requirements. See :doc:`setup-1-installing` for a thorough install
+guide, and :doc:`setup-2-running` for a thorough configuration and startup
+guide.
+
+Linux & OSX
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+    mkdir ~/.hypergolix
+    python3 -m venv ~/.hypergolix/hgx-env
+    ~/.hypergolix/hgx-env/bin/python -m pip install --upgrade pip
+    ~/.hypergolix/hgx-env/bin/pip install hypergolix
+    ~/.hypergolix/hgx-env/bin/python -m hypergolix.daemon start
+
+Windows
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+    mkdir %HOMEPATH%/.hypergolix
+    python -m venv %HOMEPATH%/.hypergolix/hgx-env
+    %HOMEPATH%/.hypergolix/hgx-env/Scripts/python -m pip install --upgrade pip
+    %HOMEPATH%/.hypergolix/hgx-env/Scripts/pip install hypergolix
+    %HOMEPATH%/.hypergolix/hgx-env/Scripts/python -m hypergolix.daemon start
+
+-------------------------------------------------------------------------------
 Features
 -------------------------------------------------------------------------------
 

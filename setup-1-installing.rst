@@ -112,10 +112,10 @@ Recommended installation procedure
 
 .. code-block:: bash
 
-    mkdir ~/.hypergolix
-    python -m venv ~/.hypergolix/hgx-env
-    ~/.hypergolix/hgx-env/bin/python -m pip install --upgrade pip
-    ~/.hypergolix/hgx-env/bin/pip install hypergolix
+    mkdir %HOMEPATH%/.hypergolix
+    python -m venv %HOMEPATH%/.hypergolix/hgx-env
+    %HOMEPATH%/.hypergolix/hgx-env/Scripts/python -m pip install --upgrade pip
+    %HOMEPATH%/.hypergolix/hgx-env/Scripts/pip install hypergolix
 
 -------------------------------------------------------------------------------
 Building from source
