@@ -5,33 +5,25 @@ Serialized Python objects
 .. note::
 
     This assumes familiarity with :class:`HGXLink`, :class:`Ghid`, 
-    :class:`ObjBase`, and :class:`ProxyBase` objects.
+    :class:`Obj`, and :class:`Proxy` objects.
 
 -------------------------------------------------------------------------------
-JSON serialization: :class:`JsonObj` and :class:`JsonProxy`
+JSON serialization
 -------------------------------------------------------------------------------
 
-Applications may use the included :class:`JsonObj` and :class:`JsonProxy` to 
-support a wider range of ``hgx_state`` value types.
-
-.. class:: JsonObj(hgxlink, state, api_id, dynamic, private, ghid=None, binder=None)
+.. class:: JsonObj(state, api_id, dynamic, private, *, hgxlink, ipc_manager, _legroom, ghid=None, binder=None, callback=None)
 
     .. versionadded:: 0.1
     
     A Hypergolix object that uses the built-in ``json`` library for 
     serialization. The resulting string is then encoded in UTF-8. Use it 
-    exactly as you would any other :class:`ObjBase` object.
-    
-    .. note::
-    
-        This **is** a subclass of :class:`ObjBase`, but **not** a subclass of 
-        :class:`ProxyBase`.
+    exactly as you would any other :class:`Obj` object.
         
     .. warning::
     
-        ``TypeError``\ s as a result of improper ``hgx_state`` declarations 
+        ``TypeError``\ s as a result of improper ``state`` declarations 
         will not be reported until their value is pushed upstream via 
-        :meth:`ObjBase._hgx_push()` or equivalent.
+        :meth:`Obj.push()` or equivalent.
 
     .. code-block:: python
 
@@ -40,32 +32,27 @@ support a wider range of ``hgx_state`` value types.
         ...     state = 'Hello Json!',
         ... )
         >>> obj
-        <JsonObj with state 'Hello Json!' at Ghid('Abf3dRNZAPhrqY93q4Q-wG0QvPnP_anV8XfauVMlFOvAgeC5JVWeXTUftJ6tmYveH0stGaAJ0jN9xKriTT1F6Mk=')>
-        >>> obj.hgx_state = 5
+        <JsonObj with state 'Hello Json!' at Ghid('bf3dR')>
+        >>> obj.state = 5
         >>> obj
-        <JsonObj with state 5 at Ghid('Abf3dRNZAPhrqY93q4Q-wG0QvPnP_anV8XfauVMlFOvAgeC5JVWeXTUftJ6tmYveH0stGaAJ0jN9xKriTT1F6Mk=')>
-        >>> obj.hgx_state = {'seven': 7}
+        <JsonObj with state 5 at Ghid('bf3dR')>
+        >>> obj.state = {'seven': 7}
         >>> obj
-        <JsonObj with state {'seven': 7} at Ghid('Abf3dRNZAPhrqY93q4Q-wG0QvPnP_anV8XfauVMlFOvAgeC5JVWeXTUftJ6tmYveH0stGaAJ0jN9xKriTT1F6Mk=')>
+        <JsonObj with state {'seven': 7} at Ghid('bf3dR')>
 
-.. class:: JsonProxy(hgxlink, state, api_id, dynamic, private, ghid=None, binder=None)
+.. class:: JsonProxy(state, api_id, dynamic, private, *, hgxlink, ipc_manager, _legroom, ghid=None, binder=None, callback=None)
 
     .. versionadded:: 0.1
     
     A Hypergolix proxy that uses the built-in ``json`` library for 
     serialization. The resulting string is then encoded in UTF-8. Use it 
-    exactly as you would any other :class:`ProxyBase` object.
-    
-    .. note::
-    
-        This **is** a subclass of :class:`ObjBase`, **and** a subclass of 
-        :class:`ProxyBase`.
+    exactly as you would any other :class:`Proxy` object.
         
     .. warning::
     
         ``TypeError``\ s as a result of improper ``hgx_state`` declarations 
         will not be reported until their value is pushed upstream via 
-        :meth:`ObjBase._hgx_push()` or equivalent.
+        :meth:`Obj._hgx_push()` or equivalent.
 
     .. code-block:: python
 
@@ -74,28 +61,25 @@ support a wider range of ``hgx_state`` value types.
         ...     state = 'Hello Json!',
         ... )
         >>> obj
-        <JsonProxy to 'Hello Json!' at Ghid('Abf3dRNZAPhrqY93q4Q-wG0QvPnP_anV8XfauVMlFOvAgeC5JVWeXTUftJ6tmYveH0stGaAJ0jN9xKriTT1F6Mk=')>
+        <JsonProxy to 'Hello Json!' at Ghid('bf3dR')>
         >>> obj.hgx_state = 5
         >>> obj
-        <JsonProxy to 5 at Ghid('Abf3dRNZAPhrqY93q4Q-wG0QvPnP_anV8XfauVMlFOvAgeC5JVWeXTUftJ6tmYveH0stGaAJ0jN9xKriTT1F6Mk=')>
+        <JsonProxy to 5 at Ghid('bf3dR')>
         >>> obj.hgx_state = {'seven': 7}
         >>> obj
-        <JsonProxy to {'seven': 7} at Ghid('Abf3dRNZAPhrqY93q4Q-wG0QvPnP_anV8XfauVMlFOvAgeC5JVWeXTUftJ6tmYveH0stGaAJ0jN9xKriTT1F6Mk=')>
+        <JsonProxy to {'seven': 7} at Ghid('bf3dR')>
 
 -------------------------------------------------------------------------------
-Pickle serialization: :class:`PickleObj` and :class:`PickleProxy`
+Pickle serialization
 -------------------------------------------------------------------------------
 
-Applications may use the included :class:`PickleObj` and :class:`PickleProxy` 
-to support a wider range of ``hgx_state`` value types.
-
-.. class:: PickleObj(hgxlink, state, api_id, dynamic, private, ghid=None, binder=None)
+.. class:: PickleObj(state, api_id, dynamic, private, *, hgxlink, ipc_manager, _legroom, ghid=None, binder=None, callback=None)
 
     .. versionadded:: 0.1
     
     A Hypergolix object that uses the built-in ``pickle`` library for 
     serialization. The resulting string is then encoded in UTF-8. Use it 
-    exactly as you would any other :class:`ObjBase` object.
+    exactly as you would any other :class:`Obj` object.
 
     .. danger::
 
@@ -104,17 +88,12 @@ to support a wider range of ``hgx_state`` value types.
         retrieving such an object effectively gives the object creator full 
         control over your computer (within the privilege limits of the current 
         Python process).
-    
-    .. note::
-    
-        This **is** a subclass of :class:`ObjBase`, but **not** a subclass of 
-        :class:`ProxyBase`.
         
     .. warning::
     
-        ``TypeError``\ s as a result of improper ``hgx_state`` declarations 
+        ``TypeError``\ s as a result of improper ``state`` declarations 
         will not be reported until their value is pushed upstream via 
-        :meth:`ObjBase._hgx_push()` or equivalent.
+        :meth:`Obj.push()` or equivalent.
 
     .. code-block:: python
 
@@ -123,21 +102,21 @@ to support a wider range of ``hgx_state`` value types.
         ...     state = 'Hello Pickle!',
         ... )
         >>> obj
-        <PickleObj with state 'Hello Pickle!' at Ghid('Abf3dRNZAPhrqY93q4Q-wG0QvPnP_anV8XfauVMlFOvAgeC5JVWeXTUftJ6tmYveH0stGaAJ0jN9xKriTT1F6Mk=')>
-        >>> obj.hgx_state = 5
+        <PickleObj with state 'Hello Pickle!' at Ghid('bf3dR')>
+        >>> obj.state = 5
         >>> obj
-        <PickleObj with state 5 at Ghid('Abf3dRNZAPhrqY93q4Q-wG0QvPnP_anV8XfauVMlFOvAgeC5JVWeXTUftJ6tmYveH0stGaAJ0jN9xKriTT1F6Mk=')>
-        >>> obj.hgx_state = {'seven': 7}
+        <PickleObj with state 5 at Ghid('bf3dR')>
+        >>> obj.state = {'seven': 7}
         >>> obj
-        <PickleObj with state {'seven': 7} at Ghid('Abf3dRNZAPhrqY93q4Q-wG0QvPnP_anV8XfauVMlFOvAgeC5JVWeXTUftJ6tmYveH0stGaAJ0jN9xKriTT1F6Mk=')>
+        <PickleObj with state {'seven': 7} at Ghid('bf3dR')>
 
-.. class:: PickleProxy(hgxlink, state, api_id, dynamic, private, ghid=None, binder=None)
+.. class:: PickleProxy(state, api_id, dynamic, private, *, hgxlink, ipc_manager, _legroom, ghid=None, binder=None, callback=None)
 
     .. versionadded:: 0.1
     
     A Hypergolix proxy that uses the built-in ``pickle`` library for 
     serialization. The resulting string is then encoded in UTF-8. Use it 
-    exactly as you would any other :class:`ProxyBase` object.
+    exactly as you would any other :class:`Proxy` object.
 
     .. danger::
 
@@ -146,17 +125,12 @@ to support a wider range of ``hgx_state`` value types.
         retrieving such an object effectively gives the object creator full 
         control over your computer (within the privilege limits of the current 
         Python process).
-    
-    .. note::
-    
-        This **is** a subclass of :class:`ObjBase`, **and** a subclass of 
-        :class:`ProxyBase`.
         
     .. warning::
     
         ``TypeError``\ s as a result of improper ``hgx_state`` declarations 
         will not be reported until their value is pushed upstream via 
-        :meth:`ObjBase._hgx_push()` or equivalent.
+        :meth:`Obj.hgx_push()` or equivalent.
 
     .. code-block:: python
 
@@ -165,51 +139,54 @@ to support a wider range of ``hgx_state`` value types.
         ...     state = 'Hello Pickle!',
         ... )
         >>> obj
-        <PickleProxy to 'Hello Pickle!' at Ghid('Abf3dRNZAPhrqY93q4Q-wG0QvPnP_anV8XfauVMlFOvAgeC5JVWeXTUftJ6tmYveH0stGaAJ0jN9xKriTT1F6Mk=')>
+        <PickleProxy to 'Hello Pickle!' at Ghid('bf3dR')>
         >>> obj.hgx_state = 5
         >>> obj
-        <PickleProxy to 5 at Ghid('Abf3dRNZAPhrqY93q4Q-wG0QvPnP_anV8XfauVMlFOvAgeC5JVWeXTUftJ6tmYveH0stGaAJ0jN9xKriTT1F6Mk=')>
+        <PickleProxy to 5 at Ghid('bf3dR')>
         >>> obj.hgx_state = {'seven': 7}
         >>> obj
-        <PickleProxy to {'seven': 7} at Ghid('Abf3dRNZAPhrqY93q4Q-wG0QvPnP_anV8XfauVMlFOvAgeC5JVWeXTUftJ6tmYveH0stGaAJ0jN9xKriTT1F6Mk=')>
+        <PickleProxy to {'seven': 7} at Ghid('bf3dR')>
 
 -------------------------------------------------------------------------------
 Custom serialization
 -------------------------------------------------------------------------------
 
 Custom serialization of objects can be easily added to Hypergolix by 
-subclassing :class:`ObjBase` and overriding:
+subclassing :class:`Obj` or :class:`Proxy` and overriding:
 
-1.  class attribute ``ObjBase._hgx_DEFAULT_API_ID``
-2.  ``staticmethod`` or ``classmethod`` **coroutine** ``ObjBase._hgx_pack()``
-3.  ``staticmethod`` or ``classmethod`` **coroutine** ``ObjBase._hgx_unpack()``
+1.  class attribute ``_hgx_DEFAULT_API``
+2.  ``staticmethod`` or ``classmethod`` **coroutine** ``hgx_pack(state)``
+3.  ``staticmethod`` or ``classmethod`` **coroutine** ``hgx_unpack(packed)``
 
 A (non-functional) toy example follows:
 
 .. code-block:: python
 
-    class ToyObj(ObjBase):
-        ''' An ObjBase that customizes serialization.
+    from hgx.utils import ApiID
+    from hgx import Obj
+    from hgx import Proxy
+
+    class ToySerializer:
+        ''' An Obj that customizes serialization.
         '''
-        _hgx_DEFAULT_API_ID = bytes(63) + b'\x04'
+        _hgx_DEFAULT_API = ApiID(bytes(63) + b'\x04')
         
         @staticmethod
-        async def _hgx_pack(state):
+        async def hgx_pack(state):
             ''' Packs the state into bytes.
             '''
             return bytes(state)
         
         @staticmethod
-        async def _hgx_unpack(packed):
+        async def hgx_unpack(packed):
             ''' Unpacks the state from bytes.
             '''
             return object(packed)
-
-Creating proxy classes for new serializations is trivial; simply subclass the 
-serialization class and :class:`ProxyBase`. For example, the :class:`JsonProxy` 
-class definition, in its entirety, is::
-        
-    class JsonProxy(JsonObj, ProxyBase):
-        ''' Make a proxy object that serializes with json.
-        '''
+            
+    
+    class ToyObj(ToySerializer, Obj):
+        pass
+    
+    
+    class ToyProxy(ToySerializer, Proxy):
         pass

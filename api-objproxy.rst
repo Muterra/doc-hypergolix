@@ -10,8 +10,7 @@ Basic ``bytes`` interface
 Hypergolix objects
 -------------------------------------------------------------------------------
 
-.. class:: Obj(state, api_id, dynamic, private, *, hgxlink, ipc_manager,
-               _legroom, ghid=None, binder=None, callback=None)
+.. class:: Obj(state, api_id, dynamic, private, *, hgxlink, ipc_manager, _legroom, ghid=None, binder=None, callback=None)
 
     .. versionadded:: 0.1
 
@@ -459,8 +458,7 @@ Hypergolix objects
 Hypergolix  proxies
 -------------------------------------------------------------------------------
 
-.. class:: Proxy(state, api_id, dynamic, private, *, hgxlink, ipc_manager,
-                 _legroom, ghid=None, binder=None, callback=None)
+.. class:: Proxy(state, api_id, dynamic, private, *, hgxlink, ipc_manager, _legroom, ghid=None, binder=None, callback=None)
 
     .. versionadded:: 0.1
     
