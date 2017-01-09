@@ -82,7 +82,8 @@ Linux & OSX
     python3 -m venv ~/.hypergolix/hgx-env
     ~/.hypergolix/hgx-env/bin/python -m pip install --upgrade pip
     ~/.hypergolix/hgx-env/bin/pip install hypergolix
-    hypergolix start
+    hypergolix config --add hgx
+    hypergolix start app
     
 **Integration:**
 
@@ -102,7 +103,8 @@ Windows
     python -m venv %HOMEPATH%/.hypergolix/hgx-env
     %HOMEPATH%/.hypergolix/hgx-env/Scripts/python -m pip install --upgrade pip
     %HOMEPATH%/.hypergolix/hgx-env/Scripts/pip install hypergolix
-    hypergolix start
+    hypergolix config --add hgx
+    hypergolix start app
     
 **Integration:**
 
@@ -152,7 +154,8 @@ Open source
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Hypergolix is completely open-source. Running your own local server is easy:
-just run the command ``hypergolix serve``. Here are some source code links:
+just run the command ``hypergolix start server``. Here are some source code
+links:
 
 +   `Hypergolix source <https://github.com/Muterra/py_hypergolix>`_
     (~36k LoC)
@@ -223,19 +226,19 @@ API reference
     api-objproxy
     api-serialization
 
--------------------------------------------------------------------------------
-Tutorials
--------------------------------------------------------------------------------
-
-.. toctree::
-    :maxdepth: 2
-
-    tuts-1-basics
-    tuts-2-sharing
-    tuts-3-advanced
-
 ..
-    Comment all of this stuff out until it's deemed useful
+    Comment all of this stuff out until it has content
+
+    -------------------------------------------------------------------------------
+    Tutorials
+    -------------------------------------------------------------------------------
+
+    .. toctree::
+        :maxdepth: 2
+
+        tuts-1-basics
+        tuts-2-sharing
+        tuts-3-advanced
     
     Indices and tables
     -------------------------------------------------------------------------------
