@@ -39,7 +39,7 @@ do this:
 
 .. code-block:: python
 
-    >>> import hypergolix as hgx
+    >>> import hgx
     >>> hgxlink = hgx.HGXLink()
     >>> alice = hgxlink.whoami
     >>> bob = hgx.Ghid.from_str('AR_2cdgIjlHpaqGa7K8CmvSksaKMIi_scApddFgHT8dZy_vW3YgoUV5T4iVvlzE2V8qsje19K33KZhyI2i0FwAk=')
@@ -65,8 +65,16 @@ all install requirements. See :doc:`setup-1-installing` for a thorough install
 guide, and :doc:`setup-2-running` for a thorough configuration and startup
 guide.
 
+.. note::
+
+    There are two parts to Hypergolix: the Hypergolix *app*, and the Hypergolix
+    *integration*. The app is installed once, globally, and the integration
+    must be available in every Python environment that wants to make use of it.
+
 Linux & OSX
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Installing Hypergolix:**
 
 .. code-block:: bash
 
@@ -74,10 +82,19 @@ Linux & OSX
     python3 -m venv ~/.hypergolix/hgx-env
     ~/.hypergolix/hgx-env/bin/python -m pip install --upgrade pip
     ~/.hypergolix/hgx-env/bin/pip install hypergolix
-    ~/.hypergolix/hgx-env/bin/python -m hypergolix.daemon start
+    hypergolix start
+    
+**Integration:**
+
+.. code-block:: bash
+
+    your/env/here/bin/pip install hgx
+
 
 Windows
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Installing Hypergolix:**
 
 .. code-block:: bash
 
@@ -85,7 +102,13 @@ Windows
     python -m venv %HOMEPATH%/.hypergolix/hgx-env
     %HOMEPATH%/.hypergolix/hgx-env/Scripts/python -m pip install --upgrade pip
     %HOMEPATH%/.hypergolix/hgx-env/Scripts/pip install hypergolix
-    %HOMEPATH%/.hypergolix/hgx-env/Scripts/python -m hypergolix.daemon start
+    hypergolix start
+    
+**Integration:**
+
+.. code-block:: bash
+
+    your/env/here/Scripts/pip install hgx
 
 -------------------------------------------------------------------------------
 Features
@@ -129,7 +152,7 @@ Open source
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Hypergolix is completely open-source. Running your own local server is easy:
-``python3 -m hypergolix.service start``. Here are some source code links:
+just run the command ``hypergolix serve``. Here are some source code links:
 
 +   `Hypergolix source <https://github.com/Muterra/py_hypergolix>`_
     (~36k LoC)
@@ -152,7 +175,7 @@ very high priority) for easy integration:
 .. code-block:: python
 
     >>> # This connects to Hypergolix
-    >>> import hypergolix as hgx
+    >>> import hgx
     >>> hgxlink = hgx.HGXLink()
     
     >>> # This creates a new object

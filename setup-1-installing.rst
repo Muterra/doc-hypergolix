@@ -2,12 +2,20 @@
 Hypergolix installation
 ===============================================================================
 
-Hypergolix is written in pure Python, but not all of its dependencies are. One
-dependency in particular (pycryptodome, used for password ``scrypting``) is
-known to cause issues with Anaconda. As such, we recommend installing
-Hypergolix into its own dedicated virtual environment, using stock Python.
+Hypergolix has two parts: 
 
-Hypergolix requires ``python>=3.5.1``.
+1.  the Hypergolix daemon (``pip install hypergolix``)
+2.  the Hypergolix integration (``pip install hgx``)
+
+To avoid namespace conflicts in dependencies, the daemon should be run in its
+own dedicated Python environment. One dependency in particular (pycryptodome,
+used for password ``scrypting``) is known to cause issues with shared
+environments, especially Anaconda. If using Anaconda, be sure to
+``pip install hypergolix`` within a new, **bare** environment.
+
+``hgx``, on the other hand, is a pure Python package, **including its
+dependencies.** As such, it is much easier to install, and you should almost
+always use ``hgx`` in your actual application.
 
 -------------------------------------------------------------------------------
 Linux
@@ -71,6 +79,18 @@ Recommended installation procedure
     ~/.hypergolix/hgx-env/bin/python -m pip install --upgrade pip
     ~/.hypergolix/hgx-env/bin/pip install hypergolix
 
+Recommended integration procedure
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+    path/to/your/app/env/bin/pip install hgx
+
+.. code-block:: python
+
+    #!/path/to/your/app/env/bin/python
+    import hgx
+
 -------------------------------------------------------------------------------
 OSX
 -------------------------------------------------------------------------------
@@ -92,6 +112,18 @@ Recommended installation procedure
     python3 -m venv ~/.hypergolix/hgx-env
     ~/.hypergolix/hgx-env/bin/python -m pip install --upgrade pip
     ~/.hypergolix/hgx-env/bin/pip install hypergolix
+
+Recommended integration procedure
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+    path/to/your/app/env/bin/pip install hgx
+
+.. code-block:: python
+
+    #!/path/to/your/app/env/bin/python
+    import hgx
 
 -------------------------------------------------------------------------------
 Windows
@@ -117,11 +149,25 @@ Recommended installation procedure
     %HOMEPATH%/.hypergolix/hgx-env/Scripts/python -m pip install --upgrade pip
     %HOMEPATH%/.hypergolix/hgx-env/Scripts/pip install hypergolix
 
+Recommended integration procedure
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+    path/to/your/app/env/Scripts/pip install hgx
+
+.. code-block:: python
+
+    #!/path/to/your/app/env/Scripts/python
+    import hgx
+
 -------------------------------------------------------------------------------
 Building from source
 -------------------------------------------------------------------------------
 
-Hypergolix itself is pure Python, so this is easy:
+Hypergolix itself is pure Python, so this is easy. Make sure you satisfy the
+installation requirements listed above, and then clone the source and install
+it:
 
 .. code-block:: bash
     

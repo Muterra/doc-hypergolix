@@ -26,7 +26,7 @@ Hypergolix IPC: the :class:`HGXLink`
 
     .. code-block:: python
 
-        >>> import hypergolix as hgx
+        >>> import hgx
         >>> hgxlink = hgx.HGXLink()
 
     .. attribute:: whoami
