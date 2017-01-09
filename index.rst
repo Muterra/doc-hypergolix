@@ -67,9 +67,10 @@ guide.
 
 .. note::
 
-    There are two parts to Hypergolix: the Hypergolix *app*, and the Hypergolix
-    *integration*. The app is installed once, globally, and the integration
-    must be available in every Python environment that wants to make use of it.
+    There are two parts to Hypergolix: the Hypergolix *daemon*, and the
+    Hypergolix *integration*. The daemon is installed only once per system, but
+    the integration must be installed in every Python environment that wants to
+    use Hypergolix.
 
 Linux & OSX
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
