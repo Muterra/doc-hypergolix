@@ -71,13 +71,24 @@ require some version muckery:
 Recommended installation procedure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+This will install Hypergolix into a dedicated Python virtual environment within 
+``/usr/local/hypergolix``, and then add the hypergolix command as a symlink
+in ``/usr/local/bin``. Afterwards, Hypergolix should be available directly
+through the command line by simply typing (for example)
+``hypergolix start app``.
+
 .. code-block:: bash
 
     sudo apt-get install python3-venv
-    mkdir ~/.hypergolix
-    python3 -m venv ~/.hypergolix/hgx-env
-    ~/.hypergolix/hgx-env/bin/python -m pip install --upgrade pip
-    ~/.hypergolix/hgx-env/bin/pip install hypergolix
+    sudo mkdir /usr/local/hypergolix
+    sudo python3 -m venv /usr/local/hypergolix/hgx-env
+    sudo /usr/local/hypergolix/hgx-env/bin/python -m pip install --upgrade pip
+    sudo /usr/local/hypergolix/hgx-env/bin/pip install hypergolix
+    sudo ln -s /usr/local/hypergolix/hgx-env/bin/hypergolix /usr/local/bin/hypergolix
+    
+.. 
+    comment out this, because we might use it later
+    echo -e "\n#Append Hypergolix to path\nPATH=\"\$PATH:\$HOME/.hypergolix/hgx-env/bin\"" >> ~/.profile
 
 Recommended integration procedure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -106,12 +117,20 @@ compile C extensions.
 Recommended installation procedure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+This will install Hypergolix into a dedicated Python virtual environment within 
+``/usr/local/hypergolix``, and then add the hypergolix command as a symlink
+in ``/usr/local/bin``. Afterwards, Hypergolix should be available directly
+through the command line by simply typing (for example)
+``hypergolix start app``.
+
 .. code-block:: bash
 
-    mkdir ~/.hypergolix
-    python3 -m venv ~/.hypergolix/hgx-env
-    ~/.hypergolix/hgx-env/bin/python -m pip install --upgrade pip
-    ~/.hypergolix/hgx-env/bin/pip install hypergolix
+    sudo apt-get install python3-venv
+    sudo mkdir /usr/local/hypergolix
+    sudo python3 -m venv /usr/local/hypergolix/hgx-env
+    sudo /usr/local/hypergolix/hgx-env/bin/python -m pip install --upgrade pip
+    sudo /usr/local/hypergolix/hgx-env/bin/pip install hypergolix
+    sudo ln -s /usr/local/hypergolix/hgx-env/bin/hypergolix /usr/local/bin/hypergolix
 
 Recommended integration procedure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -142,12 +161,28 @@ sure to download Python 3 (**not** 2.7.xx).
 Recommended installation procedure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+This will install Hypergolix within your program files. It will then add the
+Hypergolix bin folder to the *end* of your PATH (meaning everything else will
+take precedence over it). You will need to run these commands from within an
+elevated (Administrator) command prompt.
+
 .. code-block:: bash
 
-    mkdir %HOMEPATH%/.hypergolix
-    python -m venv %HOMEPATH%/.hypergolix/hgx-env
-    %HOMEPATH%/.hypergolix/hgx-env/Scripts/python -m pip install --upgrade pip
-    %HOMEPATH%/.hypergolix/hgx-env/Scripts/pip install hypergolix
+    mkdir "%PROGRAMFILES%/Hypergolix"
+    python -m venv "%PROGRAMFILES%/Hypergolix/hgx-env"
+    "%PROGRAMFILES%/Hypergolix/hgx-env/Scripts/python" -m pip install --upgrade pip
+    "%PROGRAMFILES%/Hypergolix/hgx-env/Scripts/pip" install hypergolix
+    "%PROGRAMFILES%/Hypergolix/hgx-env/Scripts/python" -m hypergolix.winpath ^%PROGRAMFILES^%/Hypergolix/hgx-env/Scripts
+    set PATH=%PATH%;%PROGRAMFILES%/Hypergolix/hgx-env/Scripts
+    
+.. warning::
+
+    Windows command prompts do not register updates to environment variables
+    after they've been started (they do not handle WS_SettingChange messages).
+    As such, ``set PATH=%PATH%;%PROGRAMFILES%/Hypergolix/hgx-env/Scripts``
+    needs to be called in any prompt that was open before Hypergolix
+    installation. Prompts opened afterwards will automatically load the correct
+    ``%PATH%``.
 
 Recommended integration procedure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -79,10 +79,12 @@ Linux & OSX
 
 .. code-block:: bash
 
-    mkdir ~/.hypergolix
-    python3 -m venv ~/.hypergolix/hgx-env
-    ~/.hypergolix/hgx-env/bin/python -m pip install --upgrade pip
-    ~/.hypergolix/hgx-env/bin/pip install hypergolix
+    sudo apt-get install python3-venv
+    sudo mkdir /usr/local/hypergolix
+    sudo python3 -m venv /usr/local/hypergolix/hgx-env
+    sudo /usr/local/hypergolix/hgx-env/bin/python -m pip install --upgrade pip
+    sudo /usr/local/hypergolix/hgx-env/bin/pip install hypergolix
+    sudo ln -s /usr/local/hypergolix/hgx-env/bin/hypergolix /usr/local/bin/hypergolix
     hypergolix config --add hgx
     hypergolix start app
     
@@ -100,10 +102,12 @@ Windows
 
 .. code-block:: bash
 
-    mkdir %HOMEPATH%/.hypergolix
-    python -m venv %HOMEPATH%/.hypergolix/hgx-env
-    %HOMEPATH%/.hypergolix/hgx-env/Scripts/python -m pip install --upgrade pip
-    %HOMEPATH%/.hypergolix/hgx-env/Scripts/pip install hypergolix
+    mkdir "%PROGRAMFILES%/Hypergolix"
+    python -m venv "%PROGRAMFILES%/Hypergolix/hgx-env"
+    "%PROGRAMFILES%/Hypergolix/hgx-env/Scripts/python" -m pip install --upgrade pip
+    "%PROGRAMFILES%/Hypergolix/hgx-env/Scripts/pip" install hypergolix
+    "%PROGRAMFILES%/Hypergolix/hgx-env/Scripts/python" -m hypergolix.winpath ^%PROGRAMFILES^%/Hypergolix/hgx-env/Scripts
+    set PATH=%PATH%;%PROGRAMFILES%/Hypergolix/hgx-env/Scripts
     hypergolix config --add hgx
     hypergolix start app
     
