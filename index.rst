@@ -231,15 +231,17 @@ API reference
     api-objproxy
     api-serialization
 
+-------------------------------------------------------------------------------
+Example Hypergolix applications and tutorials
+-------------------------------------------------------------------------------
+
+.. toctree::
+    :maxdepth: 2
+    
+    tuts-telemeter
+
 ..
     Comment all of this stuff out until it has content
-
-    -------------------------------------------------------------------------------
-    Tutorials
-    -------------------------------------------------------------------------------
-
-    .. toctree::
-        :maxdepth: 2
 
         tuts-1-basics
         tuts-2-sharing
